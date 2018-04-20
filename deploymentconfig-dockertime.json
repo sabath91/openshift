@@ -1,0 +1,187 @@
+{
+  "apiVersion": "apps.openshift.io/v1",
+  "kind": "DeploymentConfig",
+  "metadata": {
+    "annotations": {
+      "fabric8.io/git-branch": "master",
+      "fabric8.io/git-commit": "254fe92ec6f79f83384aa67f9e98d185c64398d6",
+      "fabric8.io/iconUrl": "img/icons/spring-boot.svg",
+      "fabric8.io/metrics-path": "dashboard/file/kubernetes-pods.json/?var-project=dockertime&var-version=0.0.1-SNAPSHOT",
+      "fabric8.io/scm-tag": "HEAD",
+      "fabric8.io/scm-url": "https://github.com/spring-projects/spring-boot/spring-boot-starter-parent/dockertime"
+    },
+    "creationTimestamp": "2018-04-09T11:27:35Z",
+    "finalizers": [],
+    "generation": 10,
+    "labels": {
+      "app": "dockertime",
+      "group": "pl.czyz",
+      "provider": "fabric8",
+      "version": "0.0.1-SNAPSHOT"
+    },
+    "name": "dockertime",
+    "namespace": "myproject",
+    "ownerReferences": [],
+    "resourceVersion": "16748",
+    "selfLink": "/apis/apps.openshift.io/v1/namespaces/myproject/deploymentconfigs/dockertime",
+    "uid": "00a4a489-3be9-11e8-8511-3417ebb7d8a3"
+  },
+  "spec": {
+    "replicas": 1,
+    "revisionHistoryLimit": 2,
+    "selector": {
+      "app": "dockertime",
+      "group": "pl.czyz",
+      "provider": "fabric8"
+    },
+    "strategy": {
+      "activeDeadlineSeconds": 21600,
+      "resources": {},
+      "rollingParams": {
+        "intervalSeconds": 1,
+        "maxSurge": "25%",
+        "maxUnavailable": "25%",
+        "timeoutSeconds": 3600,
+        "updatePeriodSeconds": 1
+      },
+      "type": "Rolling"
+    },
+    "template": {
+      "metadata": {
+        "annotations": {
+          "fabric8.io/git-branch": "master",
+          "fabric8.io/git-commit": "254fe92ec6f79f83384aa67f9e98d185c64398d6",
+          "fabric8.io/iconUrl": "img/icons/spring-boot.svg",
+          "fabric8.io/metrics-path": "dashboard/file/kubernetes-pods.json/?var-project=dockertime&var-version=0.0.1-SNAPSHOT",
+          "fabric8.io/scm-tag": "HEAD",
+          "fabric8.io/scm-url": "https://github.com/spring-projects/spring-boot/spring-boot-starter-parent/dockertime"
+        },
+        "finalizers": [],
+        "labels": {
+          "app": "dockertime",
+          "group": "pl.czyz",
+          "provider": "fabric8",
+          "version": "0.0.1-SNAPSHOT"
+        },
+        "ownerReferences": []
+      },
+      "spec": {
+        "containers": [
+          {
+            "args": [],
+            "command": [],
+            "env": [
+              {
+                "name": "KUBERNETES_NAMESPACE",
+                "valueFrom": {
+                  "fieldRef": {
+                    "apiVersion": "v1",
+                    "fieldPath": "metadata.namespace"
+                  }
+                }
+              }
+            ],
+            "envFrom": [],
+            "image": "dockertime:latest",
+            "imagePullPolicy": "IfNotPresent",
+            "name": "spring-boot",
+            "ports": [
+              {
+                "containerPort": 8085,
+                "protocol": "TCP"
+              },
+              {
+                "containerPort": 9779,
+                "name": "prometheus",
+                "protocol": "TCP"
+              },
+              {
+                "containerPort": 8778,
+                "name": "jolokia",
+                "protocol": "TCP"
+              }
+            ],
+            "resources": {},
+            "securityContext": {
+              "privileged": false
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": []
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "hostAliases": [],
+        "imagePullSecrets": [],
+        "initContainers": [],
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "supplementalGroups": []
+        },
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [],
+        "volumes": []
+      }
+    },
+    "test": false,
+    "triggers": [
+      {
+        "type": "ConfigChange"
+      },
+      {
+        "imageChangeParams": {
+          "automatic": true,
+          "containerNames": [
+            "spring-boot"
+          ],
+          "from": {
+            "kind": "ImageStreamTag",
+            "name": "dockertime:latest",
+            "namespace": "myproject"
+          }
+        },
+        "type": "ImageChange"
+      }
+    ]
+  },
+  "status": {
+    "availableReplicas": 1,
+    "conditions": [
+      {
+        "lastTransitionTime": "2018-04-09T11:29:15Z",
+        "lastUpdateTime": "2018-04-09T11:29:15Z",
+        "message": "Deployment config has minimum availability.",
+        "status": "True",
+        "type": "Available"
+      },
+      {
+        "lastTransitionTime": "2018-04-09T12:34:23Z",
+        "lastUpdateTime": "2018-04-09T12:34:23Z",
+        "message": "replication controller \"dockertime-6\" is waiting for pod \"dockertime-6-deploy\" to run",
+        "status": "Unknown",
+        "type": "Progressing"
+      }
+    ],
+    "details": {
+      "causes": [
+        {
+          "imageTrigger": {
+            "from": {
+              "kind": "DockerImage",
+              "name": "172.30.1.1:5000/myproject/dockertime@sha256:3984048101aa21b41533c4743c6d7e3c213b07f50c8f9b4515c45e899bca2106"
+            }
+          },
+          "type": "ImageChange"
+        }
+      ],
+      "message": "image change"
+    },
+    "latestVersion": 6,
+    "observedGeneration": 9,
+    "readyReplicas": 1,
+    "replicas": 1,
+    "unavailableReplicas": 0,
+    "updatedReplicas": 0
+  }
+}
